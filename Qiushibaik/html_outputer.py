@@ -29,7 +29,13 @@ class HtmlOutputer(object):
             fout.write("<tr>\n")
             for element in data:
                 fout.write("<tr>\n")
-                fout.write("<p>%s</p>\n"%element)
+#                 print(len(element))
+#                 print(element)
+                if len(element) == 2:
+                    fout.write("<p>%s</p>\n"%element[0])
+                    fout.write("<p><img src=%s></p>\n"%element[1].replace("//","http://"))
+                else:
+                    fout.write("<p>%s</p>\n" %element)
                 fout.write("</tr>\n")
                 fout.write("<br/>")
             fout.write("</tr>\n")

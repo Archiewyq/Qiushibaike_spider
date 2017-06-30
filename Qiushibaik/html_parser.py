@@ -29,18 +29,14 @@ class HtmlParser(object):
     def get_new_data(self, page_url, soup):
         res_data = []
 
-#         pattern = re.compile('<div.*?class="content">.*?<span>(.*?)</span>.*?</a>'+'(.*?<div.*?"stats".*?</div>)', re.RegexFlag.S)
-        pattern = re.compile('<div.*?class="content">\n*?<span.*?</span>\n*?</div>')
-        items = re.findall(pattern, str(soup))
-        b = '<div class="content"><span>'
-#         print(items)
-        for item in items:
-            temp = item.replace('\n', '')
-            temp = temp.replace('</span></div>', '')
-            temp = temp.replace('<br/>','')
-#             print(temp.replace(b, '')+'\n')
-            res_data.append(temp.replace(b, ''))
-
+        items = soup.select("div.article")
+        
+        for element in items:
+            if len(element.select("div.thumb a img")) != 0:
+                res_data.append([element.select("a div.content span")[0].text, element.select("div.thumb a img")[0]["src"]])
+            else:
+                res_data.append(element.select("a div.content span")[0].text)
+#         print(res_data)
         return res_data
     
     
@@ -48,7 +44,7 @@ class HtmlParser(object):
         if page_url is None or html_cont is None:
             return
         
-        soup = BeautifulSoup(html_cont, "html.parser")
+        soup = BeautifulSoup(html_cont, "lxml")
         new_urls =  self.get_new_urls(page_url, soup)
         new_data = self.get_new_data(page_url, soup)
 

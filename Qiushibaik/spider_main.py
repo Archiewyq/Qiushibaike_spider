@@ -35,9 +35,7 @@ class SpiderMain(object):
             except Exception as e:
                 print('craw failed',e)
 
-        self.outputer.output_html()                 #杈撳嚭缃戦〉鏂囦欢
-#         self.outputer.output_excel()                #杈撳嚭excel鏍煎紡
-#         self.outputer.output_txt()
+        self.outputer.output_html()  
         print("Work Done!")
 
 if __name__ == "__main__":
